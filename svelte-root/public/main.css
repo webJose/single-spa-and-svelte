@@ -1,0 +1,11 @@
+html {
+    height: 100vh;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 1em;
+    height: calc(100vh - 2em);
+}

@@ -1,0 +1,29 @@
+:root {
+    --priColor: rgb(63, 1, 63);
+    --priAltColor: white;
+    --priHiliColor: rgb(255, 225, 0);
+    --priHiliAltColor: black;
+    --priActiveColor: black;
+    --priActiveAltColor: rgb(206, 190, 12);
+    --secColor: rgb(114, 145, 42);
+    --secAltColor: black;
+    --secHiliColor: white;
+    --secHiliAltColor: rgb(3, 85, 20);
+
+    --controlBgColor: var(--priColor);
+    --controlFgColor: var(--priAltColor);
+    --controlHiliBgColor: var(--priHiliColor);
+    --controlHiliFgColor: var(--priHiliAltColor);
+    --controlActiveBgColor: var(--priActiveColor);
+    --controlActiveFgColor: var(--priActiveAltColor);
+
+    --controlAltBgColor: var(--secColor);
+    --controlAltFgColor: var(--secAltColor);
+    --controlAltHiliBgColor: var(--secHiliColor);
+    --controlAltHiliFgColor: var(--secHiliAltColor);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14pt;
+}
