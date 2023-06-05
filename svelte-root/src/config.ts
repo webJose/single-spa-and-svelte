@@ -1,7 +1,6 @@
 import wjConfig, { Environment } from "wj-config";
 import mainConfig from './config.json';
-// @vite-ignore
-import env from '@env';
+import env from '@core/env';
 
 const e = new Environment(env.environment);
 

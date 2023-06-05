@@ -7,12 +7,18 @@
     import pageTitle from "$stores/pageTitle";
     import SpinnerPage from "$lib/SpinnerPage.svelte";
     import config from "./config.js";
-    import { registerSpas, runSpas } from "./singleSpa.js";
+    import { navigateToUrl } from "single-spa";
+    import { runSpas } from "./singleSpa.js";
 
-    let menu: IMenuItem[] = [
+    interface SpeedyMenuItem extends IMenuItem {
+        url?: string
+    }
+
+    let menu: SpeedyMenuItem[] = [
         {
             id: 1,
             text: "Home",
+            url: "/"
         },
         {
             id: 2,
@@ -21,6 +27,7 @@
                 {
                     id: 20,
                     text: "Tools",
+                    url: "/spa01"
                 },
                 {
                     id: 21,
@@ -106,8 +113,7 @@
     $: currentLogoUrl = logos[currentLogo];
 
     const logInPromise = logIn().then(async () => {
-        // await registerSpas();
-        // runSpas();
+        runSpas();
     });
 
     function cycleLogo() {
@@ -116,6 +122,9 @@
 
     function onMenuItemClick(e: CustomEvent<IMenuItem>) {
         pageTitle.set(e.detail.text ?? "");
+        if (e.detail.url) {
+            navigateToUrl(e.detail.url);
+        }
     }
 
     function logIn() {

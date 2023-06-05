@@ -1,4 +1,4 @@
-declare module '@env' {
+declare module '@core/env' {
     type Env = {
         environment: string;
         traits: number;
