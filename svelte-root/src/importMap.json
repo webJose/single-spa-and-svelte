@@ -1,6 +1,6 @@
 {
     "imports": {
-        "@learnSspa/spa01": "http://localhost:4101/spa.js",
-        "@learnSspa/spa02": "http://localhost:4102/spa.js"
+        "@learnSspa/spa01": "http://localhost:4101/assets/spa.js",
+        "@learnSspa/spa02": "http://localhost:4102/assets/spa.js"
     }
 }
