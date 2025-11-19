@@ -1,29 +1,36 @@
 <script lang="ts" context="module">
-    export interface IMenuItem {
+    export interface MenuItemProps {
         id: string | number;
         text?: string;
         tooltip?: string;
         href?: string;
-        items?: IMenuItem[];
+    }
+
+    export type IMenuItem<T = MenuItemProps> = T & {
+        items?: IMenuItem<T>[]
     }
 </script>
 
-<script lang="ts">
-    import Menu from "./Menu.svelte";
-    import { createEventDispatcher } from "svelte";
-    import type { MenuController } from "./menuController";
-    import { cubicOut, quintIn, quintOut } from "svelte/easing";
+<script lang="ts" generics="T extends IMenuItem = IMenuItem">
+    import { createEventDispatcher, tick } from "svelte";
+    import { quintOut } from "svelte/easing";
     import { tweened } from "svelte/motion";
-    import { tick } from "svelte";
+    import Menu from "./Menu.svelte";
+    import type { MenuController } from "./menuController";
 
-    export let item: IMenuItem;
+    export let item: T;
     export let index: number;
     export let controller: MenuController;
-    export let menuText = (item: IMenuItem) => item.text ?? "";
+    export let menuText = (item: T) => item.text ?? "";
     export let level = 1;
     export let subMenuPos: "bottom" | "right" = "right";
     export let isRoot = false;
-    export let focusTarget: HTMLElement = undefined;
+    export let focusTarget: HTMLElement | undefined = undefined;
+
+    interface $$Events {
+        itemClick: CustomEvent<T>;
+        itemFocus: CustomEvent<{ item: T; index: number; }>
+    }
 
     const tabIndex = isRoot ? 0 : -1;
     let dispatch = createEventDispatcher();
@@ -72,7 +79,7 @@
     }
 
     export function focus() {
-        focusTarget.focus();
+        focusTarget?.focus();
     }
 
     export async function openSubMenu() {
@@ -133,6 +140,8 @@
     }
 </script>
 
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <li
     style:transform="scale({$clickedScale})"
     style:opacity={$clickedOpacity}
@@ -144,7 +153,7 @@
 >
     <slot {item}>
         <span
-            {tabIndex}
+            tabindex={tabIndex}
             on:focus={() => {
                 active = true;
                 dispatch('itemFocus', {
@@ -200,8 +209,7 @@
                 let:onFocus
                 on:close={handleClose}
                 parent={{ focus, closeSubMenu, openSubMenu }}
-                {children}
-                --fgColor="var(--menuFgColor)"
+                childMenus={children}
             >
                 <svelte:self
                     bind:this={children[idx]}

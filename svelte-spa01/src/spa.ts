@@ -1,45 +1,20 @@
+import { singleSpaSvelte } from "@wjfe/single-spa-svelte";
+import { cssLifecycleFactory } from "vite-plugin-single-spa/ex";
 import App from "./App.svelte";
-import singleSpaSvelte from "single-spa-svelte";
 
-const lc = singleSpaSvelte({
-    component: App
-});
-let styleEl: HTMLLinkElement;
-const doc = globalThis.window?.document;
-
-function bsStyle() {
-    if (!doc) {
-        console.warn('Could not obtain a hold of the document object.  No styles will be injected.');
-        return Promise.reject();
-    }
-    console.log('Base URL from spa01: %s', import.meta.env.BASE_URL);
-    styleEl = doc.createElement('link');
-    styleEl.rel = 'stylesheet';
-    styleEl.href = `${import.meta.env.BASE_URL}/assets/spa.css`;
-    return Promise.resolve();
-}
-
-function mountStyle() {
-    doc.head.appendChild(styleEl);
-    return Promise.resolve();
-}
-
-function unmountStyle() {
-    styleEl.remove();
-    return Promise.resolve();
-}
+const cssLc = cssLifecycleFactory('spa');
+const lc = singleSpaSvelte(App);
 
 export const bootstrap = [
-    bsStyle,
+    cssLc.bootstrap,
     lc.bootstrap
 ];
-
 export const mount = [
-    mountStyle,
+    cssLc.mount,
     lc.mount
 ];
-
 export const unmount = [
-    unmountStyle,
-    lc.unmount
+    lc.unmount,
+    cssLc.unmount,
 ];
+export const update = lc.update;

@@ -1,8 +1,8 @@
-import wjConfig, { Environment } from "wj-config";
-import mainConfig from './config.json';
 import env from '@core/env';
+import wjConfig, { buildEnvironment } from "wj-config";
+import mainConfig from './config.json';
 
-const e = new Environment(env.environment);
+const e = buildEnvironment(['Development', 'PreProduction', 'Production'], env.environment);
 
 export default await wjConfig()
     .includeEnvironment(e)

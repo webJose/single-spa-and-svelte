@@ -3,5 +3,6 @@ declare module '@core/env' {
         environment: string;
         traits: number;
     }
-    export default {} as Env;
+    const _: Env;
+    export default _;
 }

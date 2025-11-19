@@ -9,19 +9,18 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.0.3",
-    "@tsconfig/svelte": "^4.0.1",
-    "@types/node": "^20.3.0",
-    "svelte": "^3.57.0",
-    "svelte-check": "^2.10.3",
-    "tslib": "^2.5.0",
-    "typescript": "^5.0.2",
-    "vite": "^4.3.2",
-    "vite-plugin-single-spa": "^0.0.2"
-  },
   "dependencies": {
-    "single-spa": "^5.9.4",
-    "wj-config": "^2.0.0"
+    "@wjfe/single-spa-svelte": "^1.0.0",
+    "single-spa": "^6.0.3",
+    "vite-plugin-single-spa": "^1.1.0",
+    "wj-config": "^3.2.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "@tsconfig/svelte": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "svelte": "^5.39.8",
+    "svelte-check": "^4.3.4",
+    "typescript": "^5.9.3"
   }
 }

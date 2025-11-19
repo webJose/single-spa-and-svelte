@@ -7,14 +7,14 @@
 </script>
 
 <script lang="ts">
+    import * as svEasing from "svelte/easing";
     import type { IMenuItem } from "./MenuItem.svelte";
     import { flyBlur } from "./flyBlur";
-    import * as svEasing from "svelte/easing";
 
     export let items: Array<IMenuItem>;
     export let position: "bottom" | "right";
-    export let parent: MenuItemChild = undefined;
-    export let children: MenuItemChild[] = [];
+    export let parent: MenuItemChild;
+    export let childMenus: MenuItemChild[] = [];
 
     let focusIndex: number;
 
@@ -22,7 +22,7 @@
         console.group("Menu handleKey");
         console.log("Event: %o", e);
         console.log("Focus index: %d", focusIndex);
-        console.log("Children: %o", children);
+        console.log("Children: %o", childMenus);
         switch (e.code) {
             case "ArrowLeft":
                 if (position === 'right') {
@@ -31,26 +31,26 @@
                 }
                 break;
             case "ArrowRight":
-                children[focusIndex]?.openSubMenu();
+                childMenus[focusIndex]?.openSubMenu();
                 break;
             case "ArrowDown":
-                if (focusIndex === undefined || focusIndex === children.length - 1) {
-                    children[0].focus();
+                if (focusIndex === undefined || focusIndex === childMenus.length - 1) {
+                    childMenus[0].focus();
                 }
                 else {
-                    children[focusIndex + 1].focus();
+                    childMenus[focusIndex + 1].focus();
                 }
                 break;
             case "ArrowUp":
                 if (focusIndex === undefined) {
-                    children[0].focus();
+                    childMenus[0].focus();
                 } else if (focusIndex === 0 && position === "bottom") {
                     parent?.focus();
                     // parent?.closeSubMenu();
                 } else if (focusIndex === 0) {
-                    children[children.length - 1].focus();
+                    childMenus[childMenus.length - 1].focus();
                 } else {
-                    children[focusIndex - 1].focus();
+                    childMenus[focusIndex - 1].focus();
                 }
                 break;
         }

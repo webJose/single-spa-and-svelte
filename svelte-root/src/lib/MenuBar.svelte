@@ -1,15 +1,15 @@
-<script lang="ts">
+<script lang="ts" generics="T extends IMenuItem = IMenuItem">
     import { createEventDispatcher } from "svelte";
     import MenuItem, { type IMenuItem } from "./MenuItem.svelte";
     import createMenuController from "./menuController";
 
-    export let items: IMenuItem[];
+    export let items: T[];
     export let layout: "horizontal" | "vertical";
 
     const controller = createMenuController();
     const dispatch = createEventDispatcher();
 
-    function onItemClick(item: IMenuItem) {
+    function onItemClick(item: T) {
         controller.close();
         dispatch("itemClick", item);
     }

@@ -1,13 +1,13 @@
 import { svelte } from '@sveltejs/vite-plugin-svelte';
+import path from "path";
 import { defineConfig } from 'vite';
-import path from 'path';
 import vitePluginSingleSpa from 'vite-plugin-single-spa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [svelte(), vitePluginSingleSpa({
         type: 'root',
-        imoVersion: '2.4.2'
+        imo: true
     })],
     resolve: {
         alias: [
@@ -21,7 +21,7 @@ export default defineConfig({
             },
             {
                 find: '@core/env',
-                replacement: '/env.js'
+                replacement: path.resolve('./public/env.js')
             }
         ]
     },

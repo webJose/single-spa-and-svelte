@@ -1,18 +1,16 @@
 <script lang="ts">
-    import { fly, scale } from "svelte/transition";
-    import * as eases from "svelte/easing";
     import MenuBar from "$lib/MenuBar.svelte";
-    import type { IMenuItem } from "$lib/MenuItem.svelte";
+    import type { IMenuItem, MenuItemProps } from "$lib/MenuItem.svelte";
     import PageTitle from "$lib/PageTitle.svelte";
-    import pageTitle from "$stores/pageTitle";
     import SpinnerPage from "$lib/SpinnerPage.svelte";
-    import config from "./config.js";
+    import pageTitle from "$stores/pageTitle";
     import { navigateToUrl } from "single-spa";
+    import * as eases from "svelte/easing";
+    import { fly } from "svelte/transition";
+    import config from "./config.js";
     import { runSpas } from "./singleSpa.js";
 
-    interface SpeedyMenuItem extends IMenuItem {
-        url?: string
-    }
+    type SpeedyMenuItem = IMenuItem<MenuItemProps & { url?: string; }>;
 
     let menu: SpeedyMenuItem[] = [
         {
@@ -120,7 +118,7 @@
         currentLogo = (currentLogo + 1) % logos.length;
     }
 
-    function onMenuItemClick(e: CustomEvent<IMenuItem>) {
+    function onMenuItemClick(e: CustomEvent<SpeedyMenuItem>) {
         pageTitle.set(e.detail.text ?? "");
         if (e.detail.url) {
             navigateToUrl(e.detail.url);
